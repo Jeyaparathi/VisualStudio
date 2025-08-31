@@ -1,0 +1,1 @@
+This is a responsive music video website that showcases Queen's "Bohemian Rhapsody" with interactive animations and visual effects.

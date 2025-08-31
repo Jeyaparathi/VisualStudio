@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Video Hub - No Availability Issues</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 30px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+        
+        .video-notice {
+            background: rgba(255, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+            border: 1px solid rgba(255, 0, 0, 0.5);
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .video-section {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            width: 100%;
+            max-width: 800px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .video-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .video-title i {
+            color: #fdbb2d;
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            background: #000;
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .video-alternatives {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .video-option {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .video-option:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .video-option.active {
+            background: rgba(253, 187, 45, 0.3);
+            border: 1px solid #fdbb2d;
+        }
+        
+        .song-info {
+            text-align: center;
+            margin-top: 20px;
+            line-height: 1.6;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .animation-section {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .animation-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .animation-title i {
+            color: #fdbb2d;
+        }
+        
+        .animated-element {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            margin: 20px auto;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .animated-element:hover {
+            transform: scale(1.05);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .btn-pulse {
+            background-color: #9c27b0;
+        }
+        
+        .btn-color {
+            background-color: #2196F3;
+        }
+        
+        .btn-move {
+            background-color: #ff9800;
+        }
+        
+        .btn-music {
+            background-color: #f44336;
+        }
+        
+        .visualizer {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 100px;
+            gap: 4px;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        
+        .bar {
+            width: 10px;
+            background: linear-gradient(to top, #1a2a6c, #b21f1f, #fdbb2d);
+            border-radius: 5px 5px 0 0;
+            height: 20px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .video-section, .animation-section {
+                padding: 15px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-music"></i> Music Video Hub</h1>
+            <p class="subtitle">Enjoy these amazing songs with interactive animations</p>
+            <div class="video-notice">
+                <p><i class="fas fa-info-circle"></i> If a video is unavailable in your region, try one of the alternatives below</p>
+            </div>
+        </header>
+        
+        <div class="content">
+            <section class="video-section">
+                <h2 class="video-title"><i class="fab fa-youtube"></i> Queen - Bohemian Rhapsody</h2>
+                <div class="video-wrapper">
+                    <!-- Using a different video that should be available globally -->
+                    <iframe 
+                        src="https://www.youtube.com/embed/2ZBtPf7FOoM" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                
+                <div class="video-alternatives">
+                    <div class="video-option active" data-video="2ZBtPf7FOoM">Official Video</div>
+                    <div class="video-option" data-video="vsl3gBVO2k4">Live Performance</div>
+                    <div class="video-option" data-video="fJ9rUzIMcQ">Original Version</div>
+                    <div class="video-option" data-video="t99KH0TR-J4">Lyric Video</div>
+                </div>
+                
+                <div class="song-info">
+                    <h3>Queen - Bohemian Rhapsody</h3>
+                    <p>Released in 1975 • A Night at the Opera album</p>
+                    <p>One of the most iconic and innovative songs in rock history</p>
+                </div>
+            </section>
+            
+            <section class="animation-section">
+                <h2 class="animation-title"><i class="fas fa-star"></i> Interactive Animation</h2>
+                
+                <div class="visualizer" id="visualizer">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+                
+                <div class="animated-element" id="animatedBox">
+                    Click me!
+                </div>
+                <div class="controls">
+                    <button id="animateButton"><i class="fas fa-play"></i> Start Animation</button>
+                    <button id="pulseButton" class="btn-pulse"><i class="fas fa-heart"></i> Pulse Effect</button>
+                    <button id="colorButton" class="btn-color"><i class="fas fa-palette"></i> Color Change</button>
+                    <button id="moveButton" class="btn-move"><i class="fas fa-arrows-alt"></i> Move Around</button>
+                    <button id="musicButton" class="btn-music"><i class="fas fa-volume-up"></i> Music Visualizer</button>
+                </div>
+            </section>
+        </div>
+        
+        <footer>
+            <p>Created with Visual Studio • Music videos from YouTube</p>
+        </footer>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedBox = document.getElementById('animatedBox');
+            const animateButton = document.getElementById('animateButton');
+            const pulseButton = document.getElementById('pulseButton');
+            const colorButton = document.getElementById('colorButton');
+            const moveButton = document.getElementById('moveButton');
+            const musicButton = document.getElementById('musicButton');
+            const visualizer = document.getElementById('visualizer');
+            const bars = visualizer.querySelectorAll('.bar');
+            const videoOptions = document.querySelectorAll('.video-option');
+            const iframe = document.querySelector('iframe');
+            
+            let isAnimating = false;
+            let visualizerInterval;
+            
+            // Video selection functionality
+            videoOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    videoOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    const videoId = this.getAttribute('data-video');
+                    iframe.src = `https://www.youtube.com/embed/${videoId}`;
+                });
+            });
+            
+            // Click on box animation
+            animatedBox.addEventListener('click', function() {
+                if (!isAnimating) {
+                    animateBox('spin');
+                }
+            });
+            
+            // Button click animations
+            animateButton.addEventListener('click', function() {
+                if (!isAnimating) {
+                    animateBox('spin');
+                }
+            });
+            
+            pulseButton.addEventListener('click', function() {
+                if (!isAnimating) {
+                    animateBox('pulse');
+                }
+            });
+            
+            colorButton.addEventListener('click', function() {
+                if (!isAnimating) {
+                    animateBox('color');
+                }
+            });
+            
+            moveButton.addEventListener('click', function() {
+                if (!isAnimating) {
+                    animateBox('move');
+                }
+            });
+            
+            musicButton.addEventListener('click', function() {
+                if (visualizerInterval) {
+                    clearInterval(visualizerInterval);
+                    visualizerInterval = null;
+                    musicButton.innerHTML = '<i class="fas fa-volume-up"></i> Music Visualizer';
+                    resetBars();
+                } else {
+                    startVisualizer();
+                    musicButton.innerHTML = '<i class="fas fa-stop"></i> Stop Visualizer';
+                }
+            });
+            
+            function animateBox(animationType) {
+                isAnimating = true;
+                
+                // Reset animation properties
+                animatedBox.style.transform = 'translate(0, 0) rotate(0deg) scale(1)';
+                animatedBox.style.backgroundColor = '';
+                animatedBox.textContent = "Animating!";
+                
+                let start = null;
+                const duration = 2000; // 2 seconds
+                
+                function step(timestamp) {
+                    if (!start) start = timestamp;
+                    const progress = timestamp - start;
+                    const percent = Math.min(progress / duration, 1);
+                    
+                    if (animationType === 'spin') {
+                        // Spin animation
+                        const rotate = percent * 360 * 2; // Two full rotations
+                        const scale = 1 + Math.sin(percent * Math.PI) * 0.5; // Pulse effect
+                        animatedBox.style.transform = `rotate(${rotate}deg) scale(${scale})`;
+                    } 
+                    else if (animationType === 'pulse') {
+                        // Pulse animation
+                        const scale = 1 + Math.sin(percent * Math.PI * 2) * 0.3;
+                        animatedBox.style.transform = `scale(${scale})`;
+                    }
+                    else if (animationType === 'color') {
+                        // Color transition animation
+                        const r = Math.floor(150 + 100 * Math.sin(percent * Math.PI));
+                        const g = Math.floor(100 + 100 * percent);
+                        const b = Math.floor(150 + 100 * Math.cos(percent * Math.PI));
+                        animatedBox.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+                    }
+                    else if (animationType === 'move') {
+                        // Move around animation
+                        const x = Math.sin(percent * Math.PI * 2) * 100;
+                        const y = Math.cos(percent * Math.PI * 2) * 50;
+                        animatedBox.style.transform = `translate(${x}px, ${y}px)`;
+                    }
+                    
+                    if (percent < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        // Animation complete
+                        animatedBox.textContent = "Click me again!";
+                        animatedBox.style.transform = '';
+                        animatedBox.style.backgroundColor = '';
+                        isAnimating = false;
+                    }
+                }
+                
+                requestAnimationFrame(step);
+            }
+            
+            function startVisualizer() {
+                visualizerInterval = setInterval(() => {
+                    bars.forEach(bar => {
+                        const height = Math.floor(Math.random() * 80) + 10;
+                        bar.style.height = `${height}px`;
+                    });
+                }, 150);
+            }
+            
+            function resetBars() {
+                bars.forEach(bar => {
+                    bar.style.height = '20px';
+                });
+            }
+            
+            // Background color transition effect
+            function pulseBackground() {
+                const colors = [
+                    'linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d)',
+                    'linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b)',
+                    'linear-gradient(135deg, #00416a, #e4e5e6)',
+                    'linear-gradient(135deg, #000046, #1cb5e0)'
+                ];
+                
+                let currentIndex = 0;
+                
+                setInterval(() => {
+                    document.body.style.background = colors[currentIndex];
+                    currentIndex = (currentIndex + 1) % colors.length;
+                }, 10000); // Change every 10 seconds
+            }
+            
+            pulseBackground();
+        });
+    </script>
+</body>
+</html>
